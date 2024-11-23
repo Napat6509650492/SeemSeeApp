@@ -86,6 +86,23 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     }
 
+    private String getPrediction(int number) {
+        if (number >= 1 && number <= 20) {
+            return "วันนี้คุณจะมีโชคเล็กน้อยในด้านการเงิน!";
+        } else if (number >= 21 && number <= 40) {
+            return "คุณอาจพบโอกาสใหม่ ๆ ที่น่าตื่นเต้น!";
+        } else if (number >= 41 && number <= 60) {
+            return "วันนี้คุณควรระวังการสื่อสารผิดพลาด!";
+        } else if (number >= 61 && number <= 80) {
+            return "สุขภาพของคุณแข็งแรง แต่อย่าลืมพักผ่อน!";
+        } else if (number >= 81 && number <= 100) {
+            return "คุณจะได้รับข่าวดีในเร็ว ๆ นี้!";
+        } else {
+            return "ไม่มีคำทำนายสำหรับเลขนี้";
+        }
+    }
+
+
     private void startImageRotationFor3Seconds() {
         // Runnable ที่จะทำการสลับภาพทุกๆ 1 วินาที ภายใน 3 วินาที
         Runnable imageRotationRunnable = new Runnable() {
@@ -113,9 +130,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                int randomNumber = getRandomNumber();
+                String prediction = getPrediction(randomNumber);
+
                 new AlertDialog.Builder(ctx)
-                        .setTitle("You got Number : " + randomNumber)
-                        .setMessage("♥ Happy To Day ♥")
+                        .setTitle("คุณได้รับเลข: " + randomNumber)
+                        .setMessage("♥" + prediction + "♥")
                         .setPositiveButton("OK", (dialog, which) -> {
                             isShowDialog = false;
                             seemseeView.setImageDrawable(getResources().getDrawable(images[0]));
